@@ -1,5 +1,12 @@
 'use strict';
 
+
+var ADJUSTMENT_PIN_X = 25;
+var ADJUSTMENT_PIN_Y = 70;
+var VALUE_LOCATION_X_MIN = 26;
+var VALUE_LOCATION_X_MAX = 1170;
+var VALUE_LOCATION_Y_MIN = 130;
+var VALUE_LOCATION_Y_MAX = 560;
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
@@ -12,176 +19,44 @@ for (var i = 0; i < getRandomIntInclusive(1,6); i++) {
   randomFeatures[i] = featuresOffers[i]
 }
 
-var apartments = [
-  {
-    "author": {
-      "avatar": "img/avatars/user0" + getRandomIntInclusive(1, 8) +".png"
-    },
-    "offer": {
-      "title": 'строка, заголовок предложения',
-      "address": "location.x, location.y",
-      "price": getRandomIntInclusive(1, 100000),
-      "type": typeOffers[getRandomIntInclusive(0,3)],
-      "rooms": getRandomIntInclusive(1, 20),
-      "guests": getRandomIntInclusive(1, 10),
-      "checkin": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "checkout": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "features": randomFeatures,
-      "description": 'строка с описанием',
-  },
-    "location": {
-      "x": getRandomIntInclusive(1, 1170),
-      "y": getRandomIntInclusive(130, 630)
-    }
-  },
-  {
-    "author": {
-      "avatar": "img/avatars/user0" + getRandomIntInclusive(1, 8) +".png"
-    },
-    "offer": {
-      "title": 'строка, заголовок предложения',
-      "address": "location.x, location.y",
-      "price": getRandomIntInclusive(1, 100000),
-      "type": typeOffers[getRandomIntInclusive(0,3)],
-      "rooms": getRandomIntInclusive(1, 20),
-      "guests": getRandomIntInclusive(1, 10),
-      "checkin": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "checkout": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "features": randomFeatures,
-      "description": 'строка с описанием',
-  },
-    "location": {
-      "x": getRandomIntInclusive(1, 1170),
-      "y": getRandomIntInclusive(130, 630)
-    }
-  },
-  {
-    "author": {
-      "avatar": "img/avatars/user0" + getRandomIntInclusive(1, 8) +".png"
-    },
-    "offer": {
-      "title": 'строка, заголовок предложения',
-      "address": "location.x, location.y",
-      "price": getRandomIntInclusive(1, 100000),
-      "type": typeOffers[getRandomIntInclusive(0,3)],
-      "rooms": getRandomIntInclusive(1, 20),
-      "guests": getRandomIntInclusive(1, 10),
-      "checkin": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "checkout": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "features": randomFeatures,
-      "description": 'строка с описанием',
-  },
-    "location": {
-      "x": getRandomIntInclusive(1, 1170),
-      "y": getRandomIntInclusive(130, 630)
-    }
-  },
-  {
-    "author": {
-      "avatar": "img/avatars/user0" + getRandomIntInclusive(1, 8) +".png"
-    },
-    "offer": {
-      "title": 'строка, заголовок предложения',
-      "address": "location.x, location.y",
-      "price": getRandomIntInclusive(1, 100000),
-      "type": typeOffers[getRandomIntInclusive(0,3)],
-      "rooms": getRandomIntInclusive(1, 20),
-      "guests": getRandomIntInclusive(1, 10),
-      "checkin": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "checkout": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "features": randomFeatures,
-      "description": 'строка с описанием',
-  },
-    "location": {
-      "x": getRandomIntInclusive(1, 1170),
-      "y": getRandomIntInclusive(130, 630)
-    }
-  },
-  {
-    "author": {
-      "avatar": "img/avatars/user0" + getRandomIntInclusive(1, 8) +".png"
-    },
-    "offer": {
-      "title": 'строка, заголовок предложения',
-      "address": "location.x, location.y",
-      "price": getRandomIntInclusive(1, 100000),
-      "type": typeOffers[getRandomIntInclusive(0,3)],
-      "rooms": getRandomIntInclusive(1, 20),
-      "guests": getRandomIntInclusive(1, 10),
-      "checkin": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "checkout": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "features": randomFeatures,
-      "description": 'строка с описанием',
-  },
-    "location": {
-      "x": getRandomIntInclusive(1, 1170),
-      "y": getRandomIntInclusive(130, 630)
-    }
-  },
-  {
-    "author": {
-      "avatar": "img/avatars/user0" + getRandomIntInclusive(1, 8) +".png"
-    },
-    "offer": {
-      "title": 'строка, заголовок предложения',
-      "address": "location.x, location.y",
-      "price": getRandomIntInclusive(1, 100000),
-      "type": typeOffers[getRandomIntInclusive(0,3)],
-      "rooms": getRandomIntInclusive(1, 20),
-      "guests": getRandomIntInclusive(1, 10),
-      "checkin": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "checkout": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "features": randomFeatures,
-      "description": 'строка с описанием',
-  },
-    "location": {
-      "x": getRandomIntInclusive(1, 1170),
-      "y": getRandomIntInclusive(130, 630)
-    }
-  },
-  {
-    "author": {
-      "avatar": "img/avatars/user0" + getRandomIntInclusive(1, 8) +".png"
-    },
-    "offer": {
-      "title": 'строка, заголовок предложения',
-      "address": "location.x, location.y",
-      "price": getRandomIntInclusive(1, 100000),
-      "type": typeOffers[getRandomIntInclusive(0,3)],
-      "rooms": getRandomIntInclusive(1, 20),
-      "guests": getRandomIntInclusive(1, 10),
-      "checkin": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "checkout": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "features": randomFeatures,
-      "description": 'строка с описанием',
-  },
-    "location": {
-      "x": getRandomIntInclusive(1, 1170),
-      "y": getRandomIntInclusive(130, 630)
-    }
-  },
-  {
-    "author": {
-      "avatar": "img/avatars/user0" + getRandomIntInclusive(1, 8) +".png"
-    },
-    "offer": {
-      "title": 'строка, заголовок предложения',
-      "address": "location.x, location.y",
-      "price": getRandomIntInclusive(1, 100000),
-      "type": typeOffers[getRandomIntInclusive(0,3)],
-      "rooms": getRandomIntInclusive(1, 20),
-      "guests": getRandomIntInclusive(1, 10),
-      "checkin": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "checkout": checkInOutOffers[getRandomIntInclusive(0,2)],
-      "features": randomFeatures,
-      "description": 'строка с описанием',
-  },
-    "location": {
-      "x": getRandomIntInclusive(1, 1170),
-      "y": getRandomIntInclusive(130, 630)
-    }
-  }
-]
+var createObj = function (obj, key, value) {
+ for (var i = 0; i < key.length; i++) {
+  obj[key[i]] = value[i];
+}
+}
+
+//AUTHOR
+var objAuthor = {}
+var keyAuthor = ['avatar'];
+var valueAuthor = ['img/avatars/user0' + getRandomIntInclusive(1, 8) +'.png']
+
+createObj(objAuthor ,keyAuthor, valueAuthor)
+
+//OFFER
+var objOffer = {}
+var keysOffer = ['title', 'address', 'price', 'type', 'rooms', 'guests', 'checkin', 'checkout', 'features', 'description']
+var valueOffer = ['строка, заголовок предложения', 'location.x, location.y', getRandomIntInclusive(1, 100000), typeOffers[getRandomIntInclusive(0,3)], getRandomIntInclusive(1, 20), getRandomIntInclusive(1, 10), checkInOutOffers[getRandomIntInclusive(0,2)], checkInOutOffers[getRandomIntInclusive(0,2)], randomFeatures, 'строка с описанием']
+
+createObj(objOffer ,keysOffer, valueOffer)
+
+//LOCATION
+var objLocation = {}
+var keysLocation = ['x', 'y']
+var valueLocation = [getRandomIntInclusive(VALUE_LOCATION_X_MIN, VALUE_LOCATION_X_MAX) - ADJUSTMENT_PIN_X, getRandomIntInclusive(VALUE_LOCATION_Y_MIN, VALUE_LOCATION_Y_MAX) - ADJUSTMENT_PIN_Y]
+
+createObj(objLocation ,keysLocation, valueLocation)
+
+//THE BIGGEST
+var objectJs = {}
+var keyApartment = ['author', 'offer', 'location'];
+var valueApartments = [objAuthor, objOffer, objLocation]
+
+createObj(objectJs, keyApartment, valueApartments)
+
+var apartments = []
+for (var i = 0; i < 8; i++) {
+  apartments[i] = objectJs;
+}
 
 
 function getRandomIntInclusive(min, max) {
