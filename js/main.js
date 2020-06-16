@@ -7,6 +7,7 @@ var VALUE_LOCATION_X_MIN = 26;
 var VALUE_LOCATION_X_MAX = 1170;
 var VALUE_LOCATION_Y_MIN = 130;
 var VALUE_LOCATION_Y_MAX = 560;
+
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
@@ -31,13 +32,16 @@ var createArray = function () {
   var apartments = [];
   var length = 8;
   for (i = 0; i < length; i++) {
+    var randomLocatonX = getRandomIntInclusive(VALUE_LOCATION_X_MIN, VALUE_LOCATION_X_MAX);
+    var randomLocatonY = getRandomIntInclusive(VALUE_LOCATION_Y_MIN, VALUE_LOCATION_Y_MAX);
+
     apartments.push({
       author: {
         avatar: 'img/avatars/user0' + getRandomIntInclusive(1, 8) + '.png'
       },
       offer: {
         title: 'строка, заголовок предложения',
-        address: 'location.x, location.y',
+        address: randomLocatonX + ' ' + randomLocatonY,
         price: getRandomIntInclusive(1, 100000),
         type: typeOffers[getRandomIntInclusive(0, 3)],
         rooms: getRandomIntInclusive(1, 20),
@@ -49,8 +53,8 @@ var createArray = function () {
         photos: randomPhotos
       },
       location: {
-        x: getRandomIntInclusive(VALUE_LOCATION_X_MIN, VALUE_LOCATION_X_MAX) - ADJUSTMENT_PIN_X,
-        y: getRandomIntInclusive(VALUE_LOCATION_Y_MIN, VALUE_LOCATION_Y_MAX) - ADJUSTMENT_PIN_Y
+        x: randomLocatonX,
+        y: randomLocatonY
       }
     });
   }
@@ -76,9 +80,8 @@ var renderPin = function (apartment) {
 
   pinElement.querySelector('img').src = apartment.author.avatar;
   pinElement.querySelector('img').alt = apartment.offer.title;
-  pinElement.style.left = apartment.location.x + 'px';
-  pinElement.style.top = apartment.location.y + 'px';
-
+  pinElement.style.left = apartment.location.x - ADJUSTMENT_PIN_X + 'px';
+  pinElement.style.top = apartment.location.y - ADJUSTMENT_PIN_Y + 'px';
   return pinElement;
 };
 
