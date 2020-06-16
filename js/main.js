@@ -57,7 +57,7 @@ var createArray = function () {
   return apartments;
 };
 
-createArray();
+var apartments = createArray();
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -84,8 +84,8 @@ var renderPin = function (apartment) {
 
 var fragment = document.createDocumentFragment();
 
-for (i = 0; i < createArray().length; i++) {
-  fragment.appendChild(renderPin(createArray()[i]));
+for (i = 0; i < apartments.length; i++) {
+  fragment.appendChild(renderPin(apartments[i]));
 }
 
 mapPin.appendChild(fragment);
