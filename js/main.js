@@ -12,61 +12,59 @@ map.classList.remove('map--faded');
 
 var typeOffers = ['palace', 'flat', 'house', 'bungalo'];
 var checkInOutOffers = ['12:00', '13:00', '14:00'];
+
 var featuresOffers = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var randomFeatures = [];
 
-for (var i = 0; i < getRandomIntInclusive(1, 6); i++) {
+for (var i = 0; i < getRandomIntInclusive(1, featuresOffers.length); i++) {
   randomFeatures[i] = featuresOffers[i];
 }
 
-var createObj = function (obj, key, value) {
-  for (i = 0; i < key.length; i++) {
-    obj[key[i]] = value[i];
-  }
-};
+var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg', 'http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var randomPhotos = [];
 
-//  AUTHOR
-var objAuthor = {};
-var keyAuthor = ['avatar'];
-var valueAuthor = ['img/avatars/user0' + getRandomIntInclusive(1, 8) + '.png'];
-
-createObj(objAuthor, keyAuthor, valueAuthor);
-//  OFFER
-var objOffer = {};
-var keysOffer = ['title', 'address', 'price', 'type', 'rooms', 'guests', 'checkin', 'checkout', 'features', 'description'];
-var valueOffer = ['строка, заголовок предложения', 'location.x, location.y', getRandomIntInclusive(1, 100000), typeOffers[getRandomIntInclusive(0, 3)], getRandomIntInclusive(1, 20), getRandomIntInclusive(1, 10), checkInOutOffers[getRandomIntInclusive(0, 2)], checkInOutOffers[getRandomIntInclusive(0, 2)], randomFeatures, 'строка с описанием'];
-
-createObj(objOffer, keysOffer, valueOffer);
-
-//  LOCATION
-var objLocation = {};
-var keysLocation = ['x', 'y'];
-var valueLocation = [getRandomIntInclusive(VALUE_LOCATION_X_MIN, VALUE_LOCATION_X_MAX) - ADJUSTMENT_PIN_X, getRandomIntInclusive(VALUE_LOCATION_Y_MIN, VALUE_LOCATION_Y_MAX) - ADJUSTMENT_PIN_Y];
-
-createObj(objLocation, keysLocation, valueLocation);
-//  THE BIGGEST
-var objectJs = {};
-var keyApartment = ['author', 'offer', 'location'];
-var valueApartments = [objAuthor, objOffer, objLocation];
-
-createObj(objectJs, keyApartment, valueApartments);
+for (i = 0; i < getRandomIntInclusive(1, photos.length); i++) {
+  randomPhotos[i] = photos[i];
+}
 
 var createArray = function () {
-  var array = [];
-  var length = 5;
+  var apartments = [];
+  var length = 8;
   for (i = 0; i < length; i++) {
-    array.push(objectJs);
+    apartments.push({
+      author: {
+        avatar: 'img/avatars/user0' + getRandomIntInclusive(1, 8) + '.png'
+      },
+      offer: {
+        title: 'строка, заголовок предложения',
+        address: 'location.x, location.y',
+        price: getRandomIntInclusive(1, 100000),
+        type: typeOffers[getRandomIntInclusive(0, 3)],
+        rooms: getRandomIntInclusive(1, 20),
+        guests: getRandomIntInclusive(1, 10),
+        checkin: checkInOutOffers[getRandomIntInclusive(0, 2)],
+        checkout: checkInOutOffers[getRandomIntInclusive(0, 2)],
+        features: randomFeatures,
+        description: 'строка с описанием',
+        photos: randomPhotos
+      },
+      location: {
+        x: getRandomIntInclusive(VALUE_LOCATION_X_MIN, VALUE_LOCATION_X_MAX) - ADJUSTMENT_PIN_X,
+        y: getRandomIntInclusive(VALUE_LOCATION_Y_MIN, VALUE_LOCATION_Y_MAX) - ADJUSTMENT_PIN_Y
+      }
+    });
   }
-  return array;
+  return apartments;
 };
-  var x = createArray();
+
+createArray();
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
+var mapPin = document.querySelector('.map__pins');
 var pinOffer = document.querySelector('#pin')
 .content
 .querySelector('.map__pin');
@@ -84,10 +82,10 @@ var renderPin = function (apartment) {
   return pinElement;
 };
 
-/*var fragment = document.createDocumentFragment();
+var fragment = document.createDocumentFragment();
 
-for (var i = 0; i < apartments.length; i++) {
-fragment.appendChild(renderPin(apartments[i]));
+for (i = 0; i < createArray().length; i++) {
+  fragment.appendChild(renderPin(createArray()[i]));
 }
 
-mapPin.appendChild(fragment);*/
+mapPin.appendChild(fragment);
