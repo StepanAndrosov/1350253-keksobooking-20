@@ -86,8 +86,6 @@ for (i = 0; i < apartments.length; i++) {
   fragment.appendChild(renderPin(apartments[i]));
 }
 
-mapPins.appendChild(fragment);
-
 var map = document.querySelector('.map');
 var notice = document.querySelector('.notice');
 var adForm = notice.querySelector('.ad-form');
@@ -98,26 +96,31 @@ var addDisabled = function (array) {
     array[i].disabled = true;
   }
 };
-
 var avatarInput = notice.querySelector('#avatar');
-avatarInput.disabled = true;
 var titleInput = notice.querySelector('#title');
-titleInput.disabled = true;
+var address = notice.querySelector('#address');
+var typeSelect = notice.querySelector('#type');
 var priceInput = notice.querySelector('#price');
-priceInput.disabled = true;
+var timeinSelect = notice.querySelector('#timein');
+var timeoutSelect = notice.querySelector('#timeout');
+var roomNumber = notice.querySelector('#room_number');
+var capacity = notice.querySelector('#capacity');
 var fieldsetCheckbox = notice.querySelector('.features');
 var featuresInput = fieldsetCheckbox.querySelectorAll('input');
-addDisabled(featuresInput);
-var magesInput = notice.querySelector('#images');
-magesInput.disabled = true;
-var selectAll = notice.querySelectorAll('select');
-addDisabled(selectAll);
-
 var description = notice.querySelector('#description');
-description.disabled = true;
-
+var magesInput = notice.querySelector('#images');
+var selectAll = notice.querySelectorAll('select');
 var buttonAll = notice.querySelectorAll('button');
+
+addDisabled(featuresInput);
+addDisabled(selectAll);
 addDisabled(buttonAll);
+
+var adFilters = [avatarInput, titleInput, priceInput, magesInput, description];
+
+for (i = 0; i < adFilters.length; i++) {
+  adFilters[i].disabled = true;
+}
 
 var removeDisabled = function (array) {
   for (i = 0; i < array.length; i++) {
@@ -128,16 +131,60 @@ var removeDisabled = function (array) {
 var openMapAndForm = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
-  avatarInput.disabled = false;
-  titleInput.disabled = false;
-  priceInput.disabled = false;
+  mapPins.appendChild(fragment);
+
+  for (i = 0; i < adFilters.length; i++) {
+    adFilters[i].disabled = false;
+  }
+
   removeDisabled(featuresInput);
-  magesInput.disabled = false;
   removeDisabled(selectAll);
-  description.disabled = false;
   removeDisabled(buttonAll);
 };
-/* var closeMapAndForm = function () {}*/
+
+var deleteChecked = function (array) {
+  for (i = 0; i < array.length; i++) {
+    array[i].checked = false;
+  }
+};
+
+var returnPlaceholder = function (input) {
+  input.value = '';
+};
+
+var returnForms = function () {
+  returnPlaceholder(titleInput);
+  returnPlaceholder(priceInput);
+  returnPlaceholder(description);
+  typeSelect.children[1].selected = true;
+  timeinSelect.children[0].selected = true;
+  timeoutSelect.children[0].selected = true;
+  roomNumber.children[0].selected = true;
+};
+
+var closeMapAndForm = function () {
+  map.classList.add('map--faded');
+  adForm.classList.add('ad-form--disabled');
+
+  for (i = 0; i < adFilters.length; i++) {
+    adFilters[i].disabled = true;
+  }
+  deleteChecked(featuresInput);
+  addDisabled(featuresInput);
+  addDisabled(selectAll);
+  addDisabled(buttonAll);
+};
+
+var buttonReset = notice.querySelector('.ad-form__reset');
+
+buttonReset.addEventListener('mousedown', function (evt) {
+  if (evt.button === 0) {
+    closeMapAndForm();
+    deleteAdjustment();
+    returnForms();
+  }
+});
+
 mapPinMain.addEventListener('mousedown', function (evt) {
   if (evt.button === 0) {
     openMapAndForm();
@@ -154,14 +201,16 @@ mapPinMain.addEventListener('keydown', function (evt) {
 
 var adressValueX = mapPinMain.style.left;
 var adressValueY = mapPinMain.style.top;
-var address = document.querySelector('#address');
 
-address.value = parseInt(adressValueX, 10) + '-' + parseInt(adressValueY, 10);
+address.value = parseInt(adressValueX, 10) + ', ' + parseInt(adressValueY, 10);
 
 var writeAddressPin = function () {
-  address.value = (parseInt(adressValueX, 10) - ADJUSTMENT_PIN_X) + '-' + (parseInt(adressValueY, 10) - ADJUSTMENT_PIN_Y);
+  address.value = (parseInt(adressValueX, 10) - ADJUSTMENT_PIN_X) + ', ' + (parseInt(adressValueY, 10) - ADJUSTMENT_PIN_Y);
 };
 
+var deleteAdjustment = function () {
+  address.value = parseInt(adressValueX, 10) + ', ' + parseInt(adressValueY, 10);
+};
 
 titleInput.addEventListener('invalid', function () {
   if (titleInput.validity.valueMissing) {
@@ -184,8 +233,6 @@ titleInput.addEventListener('input', function () {
   }
 });
 
-var typeSelect = notice.querySelector('#type');
-
 typeSelect.addEventListener('invalid', function () {
   if (typeSelect.validity.valueMissing) {
     typeSelect.setCustomValidity('Обязательное поле');
@@ -197,6 +244,7 @@ typeSelect.addEventListener('invalid', function () {
 typeSelect.addEventListener('change', function () {
   if (typeSelect.value === 'bungalo') {
     priceInput.placeholder = '0';
+    priceInput.min = '0';
   } else if (typeSelect.value === 'flat') {
     priceInput.placeholder = '1000';
     priceInput.minlength = '1000';
@@ -212,9 +260,6 @@ typeSelect.addEventListener('change', function () {
   }
 });
 
-var timeinSelect = notice.querySelector('#timein');
-var timeoutSelect = notice.querySelector('#timeout');
-
 var addSelect = function (evt) {
   var target = evt.target || evt.srcElement;
   var related = target === timeinSelect ? timeoutSelect : timeinSelect;
@@ -226,8 +271,6 @@ var addSelectInOut = function () {
 };
 addSelectInOut();
 
-var capacity = document.querySelector('#capacity');
-var roomNumber = document.querySelector('#room_number');
 roomNumber.addEventListener('change', function () {
   var currentVal = roomNumber.value;
   if (currentVal === '100') {
@@ -259,4 +302,7 @@ roomNumber.addEventListener('change', function () {
     capacity[capacity.children.length - 4].selected = true;
   }
 });
-
+capacity[capacity.children.length - 4].disabled = true;
+capacity[capacity.children.length - 3].disabled = true;
+capacity[capacity.children.length - 1].disabled = true;
+capacity[capacity.children.length - 2].selected = true;
