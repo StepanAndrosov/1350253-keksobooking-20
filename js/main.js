@@ -94,10 +94,10 @@ var adForm = notice.querySelector('.ad-form');
 var mapPinMain = mapPins.querySelector('.map__pin--main');
 
 var addDisabled = function (array) {
-for (i = 0; i < array.length; i++) {
-  array[i].disabled = true;
-}
-}
+  for (i = 0; i < array.length; i++) {
+    array[i].disabled = true;
+  }
+};
 
 var avatarInput = notice.querySelector('#avatar');
 avatarInput.disabled = true;
@@ -120,10 +120,10 @@ var buttonAll = notice.querySelectorAll('button');
 addDisabled(buttonAll);
 
 var removeDisabled = function (array) {
-for (i = 0; i < array.length; i++) {
-  array[i].disabled = false;
-}
-}
+  for (i = 0; i < array.length; i++) {
+    array[i].disabled = false;
+  }
+};
 
 var openMapAndForm = function () {
   map.classList.remove('map--faded');
@@ -136,34 +136,34 @@ var openMapAndForm = function () {
   removeDisabled(selectAll);
   description.disabled = false;
   removeDisabled(buttonAll);
-}
-/*var closeMapAndForm = function () {}*/
+};
+/* var closeMapAndForm = function () {}*/
 mapPinMain.addEventListener('mousedown', function (evt) {
-if (evt.button === 0) {
-  openMapAndForm();
-  writeAddressPin();
-}
+  if (evt.button === 0) {
+    openMapAndForm();
+    writeAddressPin();
+  }
 });
 
 mapPinMain.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
     openMapAndForm();
     writeAddressPin();
-    }
-  });
+  }
+});
 
 var adressValueX = mapPinMain.style.left;
 var adressValueY = mapPinMain.style.top;
 var address = document.querySelector('#address');
 
-address.value = parseInt(adressValueX) + '-' + parseInt(adressValueY);
+address.value = parseInt(adressValueX, 10) + '-' + parseInt(adressValueY, 10);
 
 var writeAddressPin = function () {
   address.value = (parseInt(adressValueX, 10) - ADJUSTMENT_PIN_X) + '-' + (parseInt(adressValueY, 10) - ADJUSTMENT_PIN_Y);
-}
+};
 
 
-titleInput.addEventListener('invalid', function (evt) {
+titleInput.addEventListener('invalid', function () {
   if (titleInput.validity.valueMissing) {
     titleInput.setCustomValidity('Обязательное поле');
   } else {
@@ -186,7 +186,7 @@ titleInput.addEventListener('input', function () {
 
 var typeSelect = notice.querySelector('#type');
 
-typeSelect.addEventListener('invalid', function (evt) {
+typeSelect.addEventListener('invalid', function () {
   if (typeSelect.validity.valueMissing) {
     typeSelect.setCustomValidity('Обязательное поле');
   } else {
@@ -194,62 +194,63 @@ typeSelect.addEventListener('invalid', function (evt) {
   }
 });
 
-typeSelect.addEventListener('change', function (evt) {
+typeSelect.addEventListener('change', function () {
   if (typeSelect.value === 'bungalo') {
-    priceInput.placeholder = "0";
+    priceInput.placeholder = '0';
   } else if (typeSelect.value === 'flat') {
-    priceInput.placeholder = "1000";
-    priceInput.minlength = "1000";
-    priceInput.min = "1000";
+    priceInput.placeholder = '1000';
+    priceInput.minlength = '1000';
+    priceInput.min = '1000';
   } else if (typeSelect.value === 'house') {
-    priceInput.placeholder = "5000";
-    priceInput.minlength = "5000";
-    priceInput.min = "5000";
+    priceInput.placeholder = '5000';
+    priceInput.minlength = '5000';
+    priceInput.min = '5000';
   } else if (typeSelect.value === 'palace') {
-    priceInput.placeholder = "10000";
-    priceInput.minlength = "10000";
-    priceInput.min = "10000";
+    priceInput.placeholder = '10000';
+    priceInput.minlength = '10000';
+    priceInput.min = '10000';
   }
 });
 
-var timeinSelect = notice.querySelector('#timein')
-var timeoutSelect = notice.querySelector('#timeout')
+var timeinSelect = notice.querySelector('#timein');
+var timeoutSelect = notice.querySelector('#timeout');
 
-var addSelect = function(evt) {
+var addSelect = function (evt) {
   var target = evt.target || evt.srcElement;
   var related = target === timeinSelect ? timeoutSelect : timeinSelect;
   related.selectedIndex = target.selectedIndex;
-}
-var addSelectInOut = function() {
+};
+var addSelectInOut = function () {
   timeinSelect.addEventListener('change', addSelect);
   timeoutSelect.addEventListener('change', addSelect);
-}();
+};
+addSelectInOut();
 
-var capacity = document.querySelector("#capacity");
-var roomNumber = document.querySelector("#room_number");
-roomNumber.addEventListener("change", function() {
-  var currentVal = this.value;
-  if (currentVal == 100) {
-    for (var i = 0; i < capacity.children.length; i++) {
+var capacity = document.querySelector('#capacity');
+var roomNumber = document.querySelector('#room_number');
+roomNumber.addEventListener('change', function () {
+  var currentVal = roomNumber.value;
+  if (currentVal === '100') {
+    for (i = 0; i < capacity.children.length; i++) {
       capacity.children[i].disabled = true;
     }
     capacity.children[capacity.children.length - 1].disabled = false;
     capacity.children[capacity.children.length - 1].selected = true;
-  } else if (currentVal == 1) {
-    for (var i = 0; i < capacity.children.length; i++) {
+  } else if (currentVal === '1') {
+    for (i = 0; i < capacity.children.length; i++) {
       capacity.children[i].disabled = true;
     }
-      capacity[capacity.children.length - 2].disabled = false;
-      capacity[capacity.children.length - 2].selected = true;
-  } else if (currentVal == 2) {
-    for (var i = 0; i < capacity.children.length; i++) {
+    capacity[capacity.children.length - 2].disabled = false;
+    capacity[capacity.children.length - 2].selected = true;
+  } else if (currentVal === '2') {
+    for (i = 0; i < capacity.children.length; i++) {
       capacity.children[i].disabled = true;
     }
     capacity[capacity.children.length - 2].disabled = false;
     capacity[capacity.children.length - 3].disabled = false;
     capacity[capacity.children.length - 3].selected = true;
-  } else if (currentVal == 3) {
-    for (var i = 0; i < capacity.children.length; i++) {
+  } else if (currentVal === '3') {
+    for (i = 0; i < capacity.children.length; i++) {
       capacity.children[i].disabled = true;
     }
     capacity[capacity.children.length - 2].disabled = false;
@@ -257,5 +258,5 @@ roomNumber.addEventListener("change", function() {
     capacity[capacity.children.length - 4].disabled = false;
     capacity[capacity.children.length - 4].selected = true;
   }
-  });
+});
 
