@@ -27,7 +27,7 @@ for (i = 0; i < getRandomIntInclusive(1, photos.length); i++) {
 
 var createArray = function () {
   var apartments = [];
-  var length = 8;
+  var length = getRandomIntInclusive(1, 8);
   for (i = 0; i < length; i++) {
     apartments.push({
       author: {
@@ -62,6 +62,7 @@ function getRandomIntInclusive(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
 var mapPins = document.querySelector('.map__pins');
 var pinOffer = document.querySelector('#pin')
 .content
@@ -96,6 +97,7 @@ var addDisabled = function (array) {
     array[i].disabled = true;
   }
 };
+
 var avatarInput = notice.querySelector('#avatar');
 var titleInput = notice.querySelector('#title');
 var address = notice.querySelector('#address');
@@ -128,10 +130,18 @@ var removeDisabled = function (array) {
   }
 };
 
+var addPins = function () {
+  var pins = document.querySelectorAll('.map__pin');
+  for (i = 1; i < pins.length; i++) {
+    pins[i].style.display = '';
+  }
+};
+
 var openMapAndForm = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   mapPins.appendChild(fragment);
+  addPins();
 
   for (i = 0; i < adFilters.length; i++) {
     adFilters[i].disabled = false;
@@ -160,6 +170,14 @@ var returnForms = function () {
   timeinSelect.children[0].selected = true;
   timeoutSelect.children[0].selected = true;
   roomNumber.children[0].selected = true;
+  capacity.children[2].selected = true;
+};
+
+var deletePins = function () {
+  var pins = document.querySelectorAll('.map__pin');
+  for (i = 1; i < pins.length; i++) {
+    pins[i].style.display = 'none';
+  }
 };
 
 var closeMapAndForm = function () {
@@ -173,6 +191,7 @@ var closeMapAndForm = function () {
   addDisabled(featuresInput);
   addDisabled(selectAll);
   addDisabled(buttonAll);
+  deletePins();
 };
 
 var buttonReset = notice.querySelector('.ad-form__reset');
