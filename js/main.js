@@ -204,6 +204,14 @@ buttonReset.addEventListener('mousedown', function (evt) {
   }
 });
 
+buttonReset.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    closeMapAndForm();
+    deleteAdjustment();
+    returnForms();
+  }
+});
+
 mapPinMain.addEventListener('mousedown', function (evt) {
   if (evt.button === 0) {
     openMapAndForm();
