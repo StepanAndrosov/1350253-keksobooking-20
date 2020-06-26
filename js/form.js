@@ -39,17 +39,17 @@
   }
 
   var removeDisabled = function (array) {
-    for (var i = 0; i < array.length; i++) {
-      array[i].disabled = false;
+    for (var j = 0; j < array.length; j++) {
+      array[j].disabled = false;
     }
   };
 
   var togglePins = function (visible) {
-  var pins = document.querySelectorAll('.map__pin');
-  for (var i = 1; i < pins.length; i++) {
-    pins[i].style.display = visible ? '' : 'none';
-  }
-};
+    var pins = document.querySelectorAll('.map__pin');
+    for (var k = 1; k < pins.length; k++) {
+      pins[k].style.display = visible ? '' : 'none';
+    }
+  };
 
   var openMapAndForm = function () {
     map.classList.remove('map--faded');
@@ -57,8 +57,8 @@
     mapPins.appendChild(window.pin.fragment);
     togglePins(true);
 
-    for (var i = 0; i < adFilters.length; i++) {
-      adFilters[i].disabled = false;
+    for (var j = 0; j < adFilters.length; j++) {
+      adFilters[j].disabled = false;
     }
 
     removeDisabled(featuresInput);
@@ -67,8 +67,8 @@
   };
 
   var deleteChecked = function (array) {
-    for (var i = 0; i < array.length; i++) {
-      array[i].checked = false;
+    for (var k = 0; k < array.length; k++) {
+      array[k].checked = false;
     }
   };
 
@@ -91,8 +91,8 @@
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
 
-    for (var i = 0; i < adFilters.length; i++) {
-      adFilters[i].disabled = true;
+    for (var k = 0; k < adFilters.length; k++) {
+      adFilters[k].disabled = true;
     }
     deleteChecked(featuresInput);
     addDisabled(featuresInput);
