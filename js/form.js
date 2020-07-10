@@ -233,4 +233,22 @@
   capacity[capacity.children.length - 1].disabled = true;
   capacity[capacity.children.length - 2].selected = true;
 
+
+  adForm.addEventListener('submit', function (evt) {
+
+    window.backend.save(new FormData(adForm), function () {
+      closeMapAndForm();
+      deleteAdjustment();
+      returnForms();
+      window.alert.openSusses();
+    });
+    evt.preventDefault();
+
+    /*var onError = function (err) {
+      window.alert.openErr(err);
+    };*/
+  });
+
 })();
+
+
