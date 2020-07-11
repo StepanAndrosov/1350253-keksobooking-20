@@ -20,11 +20,10 @@
   var fragment = document.createDocumentFragment();
 
   window.backend.load(function (apartments) {
-    for (var i = 0; i < apartments; i++) {
-      fragment.appendChild(renderPin(apartments[i]));
-    }
+    apartments.forEach(function (apartment) {
+      fragment.appendChild(renderPin(apartment));
+    });
   }, function () {});
-
 
   window.pin = {
     fragment: fragment,
