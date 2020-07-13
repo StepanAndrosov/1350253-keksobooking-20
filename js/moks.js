@@ -2,34 +2,29 @@
 
 (function () {
 
-  var ADJUSTMENT_PIN_X = 25;
-  var ADJUSTMENT_PIN_Y = 70;
-  var VALUE_LOCATION_X_MIN = 26;
-  var VALUE_LOCATION_X_MAX = 1170;
-  var VALUE_LOCATION_Y_MIN = 130;
-  var VALUE_LOCATION_Y_MAX = 560;
+  var AdjustmentPin = {
+    X: 25,
+    Y: 70,
+  };
+
+  var ValueLocation = {
+    X_MIN: 26,
+    X_MAX: 1170,
+    Y_MIN: 130,
+    Y_MAX: 560,
+  };
 
   var typeOffers = ['palace', 'flat', 'house', 'bungalo'];
   var checkInOutOffers = ['12:00', '13:00', '14:00'];
-
   var featuresOffers = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  var randomFeatures = [];
-
-  for (var i = 0; i < getRandomIntInclusive(1, featuresOffers.length); i++) {
-    randomFeatures[i] = featuresOffers[i];
-  }
-
+  var randomFeatures = featuresOffers.slice(0, getRandomIntInclusive(1, featuresOffers.length));
   var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg', 'http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-  var randomPhotos = [];
-
-  for (i = 0; i < getRandomIntInclusive(1, photos.length); i++) {
-    randomPhotos[i] = photos[i];
-  }
+  var randomPhotos = photos.slice(0, getRandomIntInclusive(1, photos.length));
 
   var createArray = function () {
     var apartments = [];
     var length = getRandomIntInclusive(1, 8);
-    for (i = 0; i < length; i++) {
+    for (var i = 0; i < length; i++) {
       apartments.push({
         author: {
           avatar: 'img/avatars/user0' + getRandomIntInclusive(1, 8) + '.png'
@@ -48,8 +43,8 @@
           photos: randomPhotos
         },
         location: {
-          x: getRandomIntInclusive(VALUE_LOCATION_X_MIN, VALUE_LOCATION_X_MAX) - ADJUSTMENT_PIN_X,
-          y: getRandomIntInclusive(VALUE_LOCATION_Y_MIN, VALUE_LOCATION_Y_MAX) - ADJUSTMENT_PIN_Y
+          x: getRandomIntInclusive(ValueLocation.X_MIN, ValueLocation.X_MAX) - AdjustmentPin.X,
+          y: getRandomIntInclusive(ValueLocation.Y_MIN, ValueLocation.Y_MAX) - AdjustmentPin.Y
         }
       });
     }
@@ -65,8 +60,6 @@
   }
 
   window.data = {
-    ADJUSTMENT_PIN_X: ADJUSTMENT_PIN_X,
-    ADJUSTMENT_PIN_Y: ADJUSTMENT_PIN_Y,
     apartments: apartments,
   };
 

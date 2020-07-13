@@ -5,7 +5,6 @@
     .content
     .querySelector('.map__pin');
 
-
   var renderPin = function (apartment) {
 
     var pinElement = pinOffer.cloneNode(true);
@@ -20,9 +19,11 @@
 
   var fragment = document.createDocumentFragment();
 
-  for (var i = 0; i < window.data.apartments.length; i++) {
-    fragment.appendChild(renderPin(window.data.apartments[i]));
-  }
+  window.backend.load(function (apartments) {
+    apartments.forEach(function (apartment) {
+      fragment.appendChild(renderPin(apartment));
+    });
+  }, function () {});
 
   window.pin = {
     fragment: fragment,

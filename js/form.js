@@ -1,6 +1,11 @@
 'use strict';
 (function () {
 
+  var AdjustmentPin = {
+    X: 25,
+    Y: 70,
+  };
+
   var mapPins = document.querySelector('.map__pins');
   var map = document.querySelector('.map');
   var notice = document.querySelector('.notice');
@@ -23,7 +28,7 @@
   var buttonAll = notice.querySelectorAll('button');
 
   var addDisabled = function (array) {
-    for (i = 0; i < array.length; i++) {
+    for (var i = 0; i < array.length; i++) {
       array[i].disabled = true;
     }
   };
@@ -131,7 +136,7 @@
   address.value = parseInt(adressValueX, 10) + ', ' + parseInt(adressValueY, 10);
 
   var writeAddressPin = function () {
-    address.value = (parseInt(adressValueX, 10) - window.data.ADJUSTMENT_PIN_X) + ', ' + (parseInt(adressValueY, 10) - window.data.ADJUSTMENT_PIN_Y);
+    address.value = (parseInt(adressValueX, 10) - AdjustmentPin.X) + ', ' + (parseInt(adressValueY, 10) - AdjustmentPin.Y);
   };
 
   var deleteAdjustment = function () {
@@ -233,4 +238,19 @@
   capacity[capacity.children.length - 1].disabled = true;
   capacity[capacity.children.length - 2].selected = true;
 
+
+  adForm.addEventListener('submit', function (evt) {
+
+    window.backend.save(new FormData(adForm), function () {
+      closeMapAndForm();
+      deleteAdjustment();
+      returnForms();
+      window.alert.openSusses();
+    });
+    evt.preventDefault();
+
+  });
+
 })();
+
+
